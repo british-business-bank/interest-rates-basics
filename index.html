@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Term Structure Overview</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+	<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	<link rel="stylesheet" href="dist/custom.css">
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<script src="https://code.highcharts.com/modules/dumbbell.js"></script>
+
+
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section>
+				<img src="img/title.png" id="logo">
+				<h2>Interest Rates Overview</h2><p><small>Understanding Spot, Forward, and Swap Rates</p></small>
+				<table id="authors">
+					<tr>
+						<td><b>Sam Thawley</b><br>Managing Director, Head of Research<br>sam.thawley@SGJI.com</td>
+						<td><b>Tony Tanaka</b><br>Director, Head of NBFI<br>tony.tanaka@SGJI.com</td>
+						<td><b>Julie Liu</b><br>Associate, Credit Research<br>julie.liu@SGJI.com</td>
+					</tr>
+				</table>
+				
+
+			</section>
+			
+			<section>
+				<h3>Yield Curves</h3>
+				<section>
+					<ul>
+						<li>Plot of yields on <b>like-for-like</b> bonds differing in tenor</li>
+						<li>Investors need a basis to navigate and compare issues in the same class and between classes</li>
+						<li>Key indicator of debt capital market conditions. Analysis and pricing resolves around yield curve</li>
+						<li>Important implications across asset classes, signaling liquidity and macro conditions</li>
+						<li>Contains valuable information about future expectations that can be extracted</li>				
+					</ul>
+				</section>
+
+				<section>
+					<ul>
+						<li>Theoretically, a yield curve can be constructed for any yielding securities grouped in the same class</li>
+						<li>Use <i>&lt;IYC&gt;</i> and <i>&lt;FMC&gt;</i> in Bloomberg to list key curves </li>
+						<div class="r-stack">
+							<img
+								class="fragment current-visible"
+								data-fragment-index="1"
+								src="./img/gilts.png"
+								width="500"
+								height="380"
+							/>
+							<img
+								class="fragment current-visible"
+								data-fragment-index="2"
+								src="./img/gilts to swaps.png"
+								width="500"
+								height="380"
+							/>
+							<img
+								class="fragment current-visible"
+								data-fragment-index="3"
+								src="./img/FRA to Bund.png"
+								width="500"
+								height="380"
+							/>
+							<img
+								class="fragment"
+								data-fragment-index="4"
+								src="./img/corps.png"
+								width="500"
+								height="380"
+							/>
+						</div>
+					</ul>
+				</section>
+			</section>
+
+			<section>
+				<h3>Yield to maturity</h3>
+				
+					<section>
+						<ul>
+							<li>Yield to maturity is most commonly used to summarize a bond's pricing</li>
+							<li>Single rate equating all discounted cash streams to market price; simple and useful measure </li>
+						</ul>
+						<br>
+						<table id="bbg" class="fragment">
+							<tr>
+								<th>Name</th>
+								<th>Coupon</th>
+								<th>Price</th>
+								<th>Yield</th>
+							</tr>
+							<tr>
+								<td>GB3:GOV</td>
+								<td>0.00</td>
+								<td>4.39</td>
+								<td>4.51%</td>
+							</tr>
+							<tr>
+								<td>GB6:GOV</td>
+								<td>0.00</td>
+								<td>4.29</td>
+								<td>4.44%</td>
+							</tr>
+							<tr>
+								<td>GB12:GOV</td>
+								<td>0.00</td>
+								<td>4.12</td>
+								<td>4.30%</td>
+							</tr>
+							<tr>
+								<td>GT2:GOV</td>
+								<td>4.13</td>
+								<td>99.72</td>
+								<td>4.27%</td>
+							</tr>
+							<tr>
+								<td>GT5:GOV</td>
+								<td>4.13</td>
+								<td>99.41</td>
+								<td>4.26%</td>
+							</tr>
+							<tr>
+								<td>GT10:GOV</td>
+								<td>4.25</td>
+								<td>98.84</td>
+								<td>4.39%</td>
+							</tr>
+						</table>
+						
+					</section>
+					
+					<section>
+						$$
+						P(B) = \sum_{t=1}^T\frac{c}{({1+\mathbf{y}})^t} + \frac{F}{({1+\mathbf{y}})^{T}}
+						$$
+						<figure class="highcharts-figure, fragment">
+							<div id="ytm-chart"></div>
+						</figure>
+					</section>
+					<section>
+						<ul>
+							<li>...but can be misleading and poor measure of relative value and realized return</li>
+							<li>Is a dollar-duration-weighted average of spot rates relevant to the bond's tenor</li>
+							<li>Does not distinguish between payment patterns and term structure (coupon effect), so cash flows are not discounted at appropriate rates</li>
+							<li>Cash flows must be reinvested at ytm to realize ytm (reinvestment risk), so ytm curve is hypothetical</li>
+						</ul>
+					</section>
+			
+			</section>
+
+			<section>
+				<h3>Spot Rates</h3>
+
+				<section>
+					<ul>
+						<li>Rate on a zero loan; more <q>pure</q> than ytm</li>
+						<li>Free from coupon effect and reinvestment risk</li>
+						<li>Can be derived from coupon bonds or ytm curve</li>
+						<li><q>True</q> term structure. Appropriate for discounting cash flows and relative value analysis</li>
+					</ul>
+					<div class="fragment">
+						$$
+							P(B) = \sum_{t=1}^T\frac{c}{(1+\mathbf{s_t})^t} + \frac{F}{(1+\mathbf{s_T})^T}
+						$$
+					</div>
+				</section>
+
+				<section>
+					<ul>
+						<li>Spot curve is constructed using coupon bonds in the class spanning a range of tenors</li>
+						<li>Bootstrap is a recursive process to build out the curve from the short-end one tenor at a time</li>
+						<div class="fragment">
+						<li>XYZ has a 1y 5% bond trading at par, a 2y 6% at 101 </li>
+						<li>$s_1 = 5\%$, $s_2 = 5.47\%$ by $101 = \frac{6}{1+5\%} + \frac{106}{(1+s_2)^2}$</li>
+						</div>
+						<div class="fragment">
+						<li>Now if 3y 8% at 106, we get $s_3 = 5.80\%$ using $106 = \frac{8}{1 + 5.0\%} + \frac{8}{(1 + 5.47\%)^2} + \frac{108}{(1+s_3)^3}$ </li>
+						</div>
+					</ul>
+				</section>
+
+				<section>
+
+					<table>
+						<tr>
+							<th>Tenor</th>
+							<th>Coupon</th>
+							<th>Price</th>
+							<th>Spot rate</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>5%</td>
+							<td>100.0</td>
+							<td>5.00%</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>6%</td>
+							<td>101.0</td>
+							<td class="fragment">5.47%</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>8%</td>
+							<td>106.0</td>
+							<td class="fragment">5.80%</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>8%</td>
+							<td>106.5</td>
+							<td class="fragment">6.19%</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>4%</td>
+							<td>90.0</td>
+							<td class="fragment">6.45%</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>0%</td>
+							<td>68.0</td>
+							<td class="fragment">6.64%</td>
+						</tr>
+					</table>
+
+				</section>
+
+				<section>
+					<figure class="highcharts-figure">
+						<div id="bootstrap-chart"></div>
+					</figure>
+				</section>
+			</section>
+
+
+			<section>
+				<h3>Term Structure Drivers</h3>
+				<ul>	
+					<li>Three key factors on a yield curve shape are</li>
+						<ol><li>Expected rate changes</li><li>Term premia</li><li>Convexity premia</li></ol>
+					<li>Decomposition and analysis can help:</li>
+						
+						<ul class="r-stack">
+							<li class="fragment current-visible" data-fragment-index="1">Estimate curve's steepness/flatness reflects views of rising/stable rates and/or term premia</li>
+							<li class="fragment current-visible" data-fragment-index="2">Compare with subjective forecasts to trade</li>
+							<li class="fragment current-visible" data-fragment-index="3">Identify rich/cheap tenors and attractive positions</li>
+							<li class="fragment current-visible" data-fragment-index="4">Identify sources and risks of duration extension returns</li>
+							<li class="fragment current-visible" data-fragment-index="5">Extract market implied trajectory of central bank policy</li>
+							<li class="fragment" data-fragment-index="6">Price complex future cash flows</li>
+						</ul>	
+				</ul>
+			</section>
+
+			<section>
+				<h3>Forward Rates</h3>
+				<section>
+					<ul>
+						<li>Forward is the rate between any two periods; it can be locked in by long/short today's zeros</li>
+						<li>Most fundamental building block in yield curve</li>
+						<li>Spot rates can decompose into one-year forwards</li>
+						<li>A given spot curve implies a specific forward curve</li>
+						<li>Spot is a geometric average of forwards</li>
+						<li>Forwards magnify variations in spot curve slope</li>
+						<div class="r-stack">
+							<span class="fragment current-visible data-fragment-index=1">$ (1+s_1)\cdot(1+f_{1,2}) = (1+s_2)^2 $</span>
+							<span class="fragment current-visible data-fragment-index=2">$ (1+s_1)\cdot(1+f_{1,2})\cdot(1+f_{2,3}) = (1+s_3)^3 $</span>
+							<span class="fragment current-visible data-fragment-index=3">$ (1+s_2)^2 \cdot(1+f_{2,3}) = (1+s_3)^3 $</span>
+							<span class="fragment">$ (1+f_{m,n})^{n-m} = \frac{(1+s_n)^n}{(1+s_m)^m} $</span>
+						</div>
+					</ul>
+				</section>
+
+				<section>
+					<ul>
+						<li>Forwards give the break-even rates such that all bonds across tenors yield the same rate today</li>
+						<span class="r-stack">
+						<li><span class="fragment current-visible data-fragment-index=1">If spots slope up, longer bonds have +carry, so long rates must rise to cause losses to equate returns</span><li class="fragment current-visible data-fragment-index=2">If spots slope down, longer bonds have -carry, so long rates must fall to cause gains to equate returns</li><li class="fragment current-visible data-fragment-index=3">If curve concave, 2-5 flattener (sell 2s, buy 5s & 0s) has -carry, so curve must flatten to equate returns</li><li class="fragment data-fragment-index=4">If curve concave, 2-4 steepener (buy 2s, sell 4s & 0s) has +carry, so curve must flatten to equate returns</li></li>
+						</span>
+						<li class="fragment">If $s_1 = 6\%$ and $s_2 = 7\%$, $f_{1,2} = 8\%$, so buy 2s at $87.34$ now and sell at $92.58 (100/1.08)$ returns $6\%$</li>
+						<li class="fragment">2s has to rise by 1% and constant-maturity $s_1$ by 2% to equate returns. The 1% difference is called roll</li>
+					</ul>
+
+				</section>
+
+				<section>
+					<div class="r-stack">
+					<table id="rates" class="fragment current-visible data-fragment-index=0">
+						<tr><th>A<br> Spot (today)</th><th>B<br> 1y forward</th> <th>C<br>Implied spot in 1y</th><th>D &nbsp;(C-A)<br>Implied &Delta; spot in 1y</th><th>E<br>Implied spot in 2y</th><th>F &nbsp;(E-A)<br>Implied &Delta;spot in 2y</th></tr>
+						<tr><td>$s_1$ &nbsp; &nbsp; 6.00</td><td>$f_{0,1}$ &nbsp; &nbsp; 6.00</td><td>$f_{1,2}$ &nbsp; &nbsp; 8.01</td><td>2.01</td><td>$f_{2,3}$ &nbsp; &nbsp; 9.27</td><td>3.27</td></tr>
+						<tr><td>$s_2$ &nbsp; &nbsp; 7.00</td><td>$f_{1,2}$ &nbsp; &nbsp; 8.01</td><td>$f_{1,3}$ &nbsp; &nbsp; 8.64</td><td>1.64</td><td>$f_{2,4}$ &nbsp; &nbsp; 9.64</td><td>2.64</td></tr>
+						<tr><td>$s_3$ &nbsp; &nbsp; 7.75</td><td>$f_{2,3}$ &nbsp; &nbsp; 9.27</td><td>$f_{1,4}$ &nbsp; &nbsp; 9.09</td><td>1.34</td><td>$f_{2,5}$ &nbsp; &nbsp; 9.90</td><td>2.15</td></tr>
+						<tr><td>$s_4$ &nbsp; &nbsp; 8.31</td><td>$f_{3,4}$ &nbsp; &nbsp; 10.01</td><td>$f_{1,5}$ &nbsp; &nbsp; 9.42</td><td>1.11</td><td>$f_{2,6}$ &nbsp; &nbsp; 10.09</td><td>1.78</td></tr>
+						<tr><td>$s_5$ &nbsp; &nbsp; 8.73</td><td>$f_{4,5}$ &nbsp; &nbsp; 10.43</td><td>$f_{1,6}$ &nbsp; &nbsp; 9.67</td><td>0.94</td><td>$f_{2,7}$ &nbsp; &nbsp; 10.22</td><td>1.49</td></tr>
+						<tr><td>$s_6$ &nbsp; &nbsp; 9.05</td><td>$f_{5,6}$ &nbsp; &nbsp; 10.66</td><td>$f_{1,7}$ &nbsp; &nbsp; 9.85</td><td>0.8</td><td>$f_{2,8}$ &nbsp; &nbsp; 10.31</td><td>1.26</td></tr>
+						<tr><td>$s_7$ &nbsp; &nbsp; 9.29</td><td>$f_{6,7}$ &nbsp; &nbsp; 10.74</td><td>$f_{1,8}$ &nbsp; &nbsp; 9.97</td><td>0.68</td><td>$f_{2,9}$ &nbsp; &nbsp; 10.35</td><td>1.06</td></tr>
+						<tr><td>$s_8$ &nbsp; &nbsp; 9.47</td><td>$f_{7,8}$ &nbsp; &nbsp; 10.74</td><td>$f_{1,9}$ &nbsp; &nbsp; 10.06</td><td>0.59</td><td>$f_{2,10}$ &nbsp; &nbsp; 10.39</td><td>0.92</td></tr>
+						<tr><td>$s_9$ &nbsp; &nbsp; 9.60</td><td>$f_{8,9}$ &nbsp; &nbsp; 10.65</td><td>$f_{1,10}$ &nbsp; &nbsp; 10.12</td><td>0.52</td><td></td><td></td></tr>
+						<tr><td>$s_10$ &nbsp; &nbsp; 9.70</td><td>$f_{9,10}$ &nbsp; &nbsp; 10.60</td><td></td><td></td><td></td><td></td></tr>
+					</table>
+
+					
+					<figure class="highcharts-figure fragment current-visible data-fragment-index=1" id="rates-chart">
+					</figure>
+
+					<figure class="highcharts-figure fragment" id="rates-chart2">
+					</figure>
+
+					</div>
+				</section>	
+				
+				<section>
+					<ul>
+						<li>I buy 3s funded by 1s, carry is $s_3 - s_1 = 1.75\% $ </li>
+						<li>Bullish position, +PL and -PL from rate fall and rise</li>
+						<li>$f_{1,3} - s_3$ shows my 3s yield buffer </li>
+						<li>If curve unchanged, $s_3$ rolls down to $s_2$ giving +PL</li>
+						<li>Added together, it answers how much $s_2$ must change in 1y to equate 1s and 3s returns</li>
+						<li>$(f_{1,3} - s_3) + (s_3 - s_2) = f_{1,3} - s_2$</li>
+						<li>If I forecast the $s_2$ next year won't rise above today's $s_3$, I profit from both the view and roll</li>
+					</ul>
+				</section>
+
+			</section>
+
+			
+
+
+
+		</div>
+	</div>
+
+	<!--revealjs-->
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script>
+		
+		Reveal.initialize({
+			hash: true,
+			transition: 'convex',
+			transitionSpeed: 'slow',
+			plugins: [RevealMath, RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+
+	<!--highcharts-->
+	<script src="charts/ytm.js"></script>
+	<script src="charts/bootstrap.js"></script>
+	<script src="charts/rates.js"></script>
+	<script src="charts/rates-chart2.js"></script>
+
+	
+</body>
+
+</html>
